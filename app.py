@@ -78,7 +78,7 @@ with st.sidebar.form("task_form"):
         st.warning("⚠️ Task name required.")
 
 # ---------- Dashboard Header ----------
-st.title("📋 Project/Task Manager")
+st.title("📋 StickIt")
 st.markdown("Organize tasks, manage deadlines, and collaborate visually.")
 
 # ---------- Calendar View ----------
