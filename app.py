@@ -179,4 +179,4 @@ if not df.empty:
 
 # ---------- Footer ----------
 st.markdown("---")
-st.markdown("🚀 Built with ❤️ using Streamlit | Your lightweight Monday.com alternative.")
+st.markdown("🚀 Built with ❤️ by Shreya | Your lightweight Monday.com alternative.")
