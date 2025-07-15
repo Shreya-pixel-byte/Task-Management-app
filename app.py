@@ -8,6 +8,15 @@ from streamlit_calendar import calendar
 # ---------- Setup ----------
 st.set_page_config(page_title="🧠 Project Dashboard", layout="wide")
 
+# ---------- Simulated Login ----------
+st.sidebar.title("🔐 Login")
+username = st.sidebar.text_input("Username", help="Enter a unique name to manage your own tasks.")
+if not username:
+    st.warning("Please enter a username to view and manage tasks.")
+    st.stop()
+
+USER_TASK_FILE = f"tasks_{username.lower()}.json"
+
 # ---------- Add corkboard background ----------
 st.markdown(
     """
@@ -25,13 +34,13 @@ st.markdown(
 
 # ---------- Helper Functions ----------
 def load_tasks():
-    if os.path.exists("tasks.json"):
-        with open("tasks.json", "r") as f:
+    if os.path.exists(USER_TASK_FILE):
+        with open(USER_TASK_FILE, "r") as f:
             return json.load(f)
     return []
 
 def save_tasks(tasks):
-    with open("tasks.json", "w") as f:
+    with open(USER_TASK_FILE, "w") as f:
         json.dump(tasks, f, indent=2)
 
 def add_task(name, description, deadline, priority, attachment_path=""):
@@ -79,7 +88,7 @@ with st.sidebar.form("task_form"):
 
 # ---------- Dashboard Header ----------
 st.title("📋 StickIt")
-st.markdown("Organize tasks, manage deadlines, and collaborate visually.")
+st.markdown(f"Organize tasks, manage deadlines, and collaborate visually. <br><strong>Logged in as:</strong> <code>{username}</code>", unsafe_allow_html=True)
 
 # ---------- Calendar View ----------
 st.subheader("📆 Calendar Overview")
