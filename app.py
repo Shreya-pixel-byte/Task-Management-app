@@ -38,7 +38,7 @@ username = st.sidebar.text_input("Enter your name to begin:")
 if not username:
     st.title("👋 Welcome to StickIt!")
     st.markdown("Organize tasks, manage deadlines, and collaborate — just by entering your name.")
-    st.image("https://i.imgur.com/JXqfhZb.gif", caption="Juggling tasks like a pro!", use_column_width=True)
+    st.image("https://media.giphy.com/media/3o7TKsQbW5GvXlzU2w/giphy.gif", caption="Juggling tasks like a pro!", use_column_width=True)
     st.stop()
 
 # ---------- User-Specific File ----------
