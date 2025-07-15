@@ -6,18 +6,9 @@ from datetime import datetime, timedelta
 from streamlit_calendar import calendar
 
 # ---------- Setup ----------
-st.set_page_config(page_title="🧠 Project Dashboard", layout="wide")
+st.set_page_config(page_title="🧠 StickIt Dashboard", layout="wide")
 
-# ---------- Simulated Login ----------
-st.sidebar.title("🔐 Login")
-username = st.sidebar.text_input("Username", help="Enter a unique name to manage your own tasks.")
-if not username:
-    st.warning("Please enter a username to view and manage tasks.")
-    st.stop()
-
-USER_TASK_FILE = f"tasks_{username.lower()}.json"
-
-# ---------- Add corkboard background ----------
+# ---------- Background Style ----------
 st.markdown(
     """
     <style>
@@ -31,6 +22,27 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
+# ---------- Sidebar Login ----------
+st.sidebar.header("🔐 Login")
+st.sidebar.markdown(
+    """
+    👋 **Welcome to StickIt!**  
+    Just type your name below — no password needed.  
+    Your tasks are private and saved just for you.  
+    🧠✅✨
+    """
+)
+username = st.sidebar.text_input("Enter your name to begin:")
+
+if not username:
+    st.title("👋 Welcome to StickIt!")
+    st.markdown("Organize tasks, manage deadlines, and collaborate — just by entering your name.")
+    st.image("https://i.imgur.com/JXqfhZb.gif", caption="Juggling tasks like a pro!", use_column_width=True)
+    st.stop()
+
+# ---------- User-Specific File ----------
+USER_TASK_FILE = f"tasks_{username.lower().strip()}.json"
 
 # ---------- Helper Functions ----------
 def load_tasks():
@@ -86,11 +98,11 @@ with st.sidebar.form("task_form"):
     elif submitted:
         st.warning("⚠️ Task name required.")
 
-# ---------- Dashboard Header ----------
-st.title("📋 StickIt")
-st.markdown(f"Organize tasks, manage deadlines, and collaborate visually. <br><strong>Logged in as:</strong> <code>{username}</code>", unsafe_allow_html=True)
+# ---------- Header ----------
+st.title(f"📋 Welcome, {username.capitalize()}!")
+st.markdown("Manage your tasks in your own private board.")
 
-# ---------- Calendar View ----------
+# ---------- Calendar ----------
 st.subheader("📆 Calendar Overview")
 calendar_events = [
     {"title": t["name"], "start": t["deadline"], "end": t["deadline"], "color": color_by_priority(t["priority"])}
@@ -106,9 +118,9 @@ if not df.empty:
     st.markdown("### 🧩 Tasks by Status")
     st.bar_chart(status_counts)
 else:
-    st.info("No tasks available yet. Add one from the sidebar.")
+    st.info("No tasks yet. Add one from the sidebar!")
 
-# ---------- Task Board with Edit & Delete ----------
+# ---------- Task Board ----------
 st.subheader("🗂️ Task Board")
 columns = st.columns(3)
 status_names = ["To Do", "In Progress", "Done"]
@@ -119,7 +131,6 @@ for i, status in enumerate(status_names):
         for t in tasks:
             if t["status"] == status:
                 color = color_by_priority(t["priority"])
-
                 with st.container():
                     st.markdown(f"""
                     <div style="
@@ -188,4 +199,4 @@ if not df.empty:
 
 # ---------- Footer ----------
 st.markdown("---")
-st.markdown("🚀 Built with ❤️ by Shreya | Your lightweight Monday.com alternative.")
+st.markdown("🚀 Built with ❤️ by Shreya | Your fun, personal task board.")
